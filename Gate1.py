@@ -12,6 +12,3 @@ class Gate1(Gates):
         with open(savePath,'w') as saveFile:
             saveFile.write(self.readFile())
             print('Fisier salvat')
-
-    def postToDB(self):
-        pass    

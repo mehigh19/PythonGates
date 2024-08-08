@@ -9,6 +9,3 @@ class Gate2():
 
     def saveFile(self):
         pass
-
-    def postToDB(self):
-        pass
