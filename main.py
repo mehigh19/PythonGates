@@ -22,7 +22,17 @@ def addJson():
 
 @app.route('/test',methods=['POST'])
 def postToDB():
-    pass
+    body = request.get_json()
+    if body is None:
+        return jsonify({"error": "Invalid JSON data"}), 400
+    nume = body.get('nume')
+    prenume = body.get('prenume')
+    companie = body.get('companie')
+    idmanager = body.get('idmanager')
+        
+    ceoUser=AddToDB(nume,prenume,companie,idmanager)
+    ceoUser.registerUser()
+    return jsonify(body)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=4000,debug=True)
