@@ -23,7 +23,4 @@ class AddToDB():
         self.con.commit()
         self.cursor.close()
         self.con.close()
-        print('Utilizator inregistrat cu succes')
-
-# ceoUser=AddToDB('Popescu','Rares','JB',1)
-# ceoUser.registerUser()
+        print(f'Utilizatorul {self.nume} {self.prenume} a fost inregistrat cu succes')
