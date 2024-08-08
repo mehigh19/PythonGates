@@ -9,7 +9,3 @@ class Gates(ABC):
     @abstractmethod
     def saveFile(self):
         pass
-
-    @abstractmethod
-    def postToDB(self):
-        pass
