@@ -10,6 +10,6 @@ class Gates(ABC):
     def saveFile(self):
         pass
 
-    # @abstractmethod
-    # def postToDB(self):
-    #     pass
+    @abstractmethod
+    def postToDB(self):
+        pass
