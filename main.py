@@ -2,7 +2,7 @@ from Gate1 import Gate1
 from Gate2 import Gate2
 from AddToDB import AddToDB
 from flask import Flask,request, jsonify
-import json
+import os
 
 poarta1=Gate1()
 poarta1.saveFile()
@@ -10,15 +10,9 @@ poarta1.saveFile()
 app=Flask(__name__)
 
 @app.route('/test')
-def addJson():
-    poarta2 = Gate2()
-    file_content = poarta2.readFile()
-    lines = file_content.strip().splitlines()
-    json_content = {"file_content": lines}
-    save_path = r'HW\PythonGates\Poarta2.json'
-    with open(save_path, 'w') as json_file:
-        json.dump(json_content, json_file, indent=4)
-    return jsonify(json_content)
+def addFile():
+    poarta2=Gate2()
+    return poarta2.saveFile()
 
 @app.route('/test',methods=['POST'])
 def postToDB():
