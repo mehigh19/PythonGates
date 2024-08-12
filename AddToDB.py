@@ -16,6 +16,7 @@ class AddToDB():
         )
         self.cursor = self.con.cursor()
         
+        
     def registerUser(self):
         query = 'INSERT INTO `pythongates` (`nume`, `prenume`, `companie`, `idmanager`) VALUES(%s,%s,%s,%s)'
         values = (self.nume,self.prenume,self.companie,self.idmanager)
