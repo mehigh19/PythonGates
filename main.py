@@ -1,18 +1,32 @@
 from Gate1 import Gate1
 from Gate2 import Gate2
 from AddToDB import AddToDB
+from MoveFile import MoveFile
 from flask import Flask,request, jsonify
-import os
-
-poarta1=Gate1()
-poarta1.saveFile()
+import threading
+import time
 
 app=Flask(__name__)
 
+poarta1=Gate1()
+poarta1.saveFile()
+poarta2=Gate1()
+poarta2.saveFileCsv()
+
+def thread_function():
+    while True:
+        moveFile=MoveFile()
+        MoveFile.check_txt()
+        time.sleep(4)
+        MoveFile.check_csv()
+        time.sleep(15)
+
+thread = threading.Thread(target=thread_function)
+# thread.start()      
+
 @app.route('/test')
 def addFile():
-    poarta2=Gate2()
-    return poarta2.saveFile()
+    pass
 
 @app.route('/test',methods=['POST'])
 def postToDB():
