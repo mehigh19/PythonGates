@@ -2,6 +2,7 @@ from Gate1 import Gate1
 from Gate2 import Gate2
 from AddToDB import AddToDB
 from MoveFile import MoveFile
+from AddToAccess import AddToAccess
 from flask import Flask,request, jsonify
 import threading
 import time
@@ -9,8 +10,8 @@ import time
 app=Flask(__name__)
 
 poarta1=Gate1()
-poarta1.saveFile()
 poarta2=Gate1()
+poarta1.saveFile()
 poarta2.saveFileCsv()
 
 def thread_function():
@@ -24,9 +25,19 @@ def thread_function():
 thread = threading.Thread(target=thread_function)
 # thread.start()      
 
-@app.route('/test')
+@app.route('/access',methods=['POST'])
 def addFile():
-    pass
+    body = request.get_json()
+    if body is None:
+        return jsonify({"error": "Invalid JSON data"}), 400
+    data = body.get('data')
+    sens = body.get('sens')
+    idPersoana = body.get('idPersoana')
+    idPoarta = body.get('idPoarta')
+        
+    addData=AddToAccess(data,sens,idPersoana,idPoarta)
+    addData.addDataAccess()
+    return jsonify(body)
 
 @app.route('/test',methods=['POST'])
 def postToDB():
