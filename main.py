@@ -10,6 +10,8 @@ app=Flask(__name__)
 
 poarta1=Gate1()
 poarta1.saveFile()
+poarta2=Gate1()
+poarta2.saveFileCsv()
 
 def thread_function():
     while True:
@@ -24,8 +26,7 @@ thread = threading.Thread(target=thread_function)
 
 @app.route('/test')
 def addFile():
-    poarta2=Gate2()
-    return poarta2.saveFile()
+    pass
 
 @app.route('/test',methods=['POST'])
 def postToDB():
