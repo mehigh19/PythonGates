@@ -38,7 +38,7 @@ def addFile():
 
     addData=AddToAccess(data,sens,idPersoana,idPoarta)
     addData.addDataAccess()
-
+    print('Data inserted succesfully')
     with open(r'HW\PythonGates\backup_intrari\Poarta3.json','w') as jsonFile:
         json.dump(body,jsonFile)
     return jsonify(body)

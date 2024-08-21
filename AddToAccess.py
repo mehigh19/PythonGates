@@ -23,4 +23,3 @@ class AddToAccess():
         self.con.commit()
         self.cursor.close()
         self.con.close()
-        print('Data inserted succesfully')
