@@ -6,6 +6,7 @@ from AddToAccess import AddToAccess
 from flask import Flask,request, jsonify
 import threading
 import time
+import json
 
 app=Flask(__name__)
 
@@ -34,10 +35,14 @@ def addFile():
     sens = body.get('sens')
     idPersoana = body.get('idPersoana')
     idPoarta = body.get('idPoarta')
-        
+
     addData=AddToAccess(data,sens,idPersoana,idPoarta)
     addData.addDataAccess()
+
+    with open(r'HW\PythonGates\backup_intrari\Poarta3.json','w') as jsonFile:
+        json.dump(body,jsonFile)
     return jsonify(body)
+
 
 @app.route('/test',methods=['POST'])
 def postToDB():
