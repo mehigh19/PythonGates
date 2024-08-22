@@ -1,12 +1,12 @@
 from Gate1 import *
 from AddToAccess import *
 
-readTxt=Gate1
+readTheFile=Gate1
 
 class ManipulateData():
 
-     def manipulateDataTxt(self):
-        dateTxt=readTxt.readFile(self).split('\n')
+    def manipulateDataTxt(self):
+        dateTxt=readTheFile.readFile(self).split('\n')
         data_list=[]
         id_list=[]
         sens_list=[]
@@ -35,13 +35,46 @@ class ManipulateData():
         
         return 'Data from Poarta1.txt inserted succesfully'
 
-        # list=[]
-        # for element in range(len(dateTxt)-1):
-        #        list.append(id_list[element])
-        #        list.append(data_list[element])
-        #        list.append(sens_list[element])
+    def manipulateDataCsv(self):
+        dateCsv=readTheFile.readFileCsv(self).split('\n')
+        data_list=[]
+        id_list=[]
+        sens_list=[]
 
-        # return(list)
+        for time in range(len(dateCsv)-1):
+            if not time ==0:
+                data=""
+                for character in range(2,26): 
+                        data+=dateCsv[time][character]
+                data_list.append(data)
+            
+        for way in range(len(dateCsv)-1):
+            if not way ==0:
+                sens=''
+                sens+=dateCsv[way][27]
+                sens+=dateCsv[way][28]
+                try:
+                        if (dateCsv[way][29]) == 't':
+                            sens+=dateCsv[way][29]
+                except IndexError as e:
+                        pass
+                sens_list.append(sens)
+        for id in range(len(dateCsv)-1):
+            if not id == 0: 
+                id_list.append(dateCsv[id][0])
+
+        for element in range(len(dateCsv)-2):
+            object=AddToAccess(data_list[element],sens_list[element],id_list[element],2)
+            object.addDataAccess()
+
+        return 'Data from Poarta2.csv inserted succesfully'
 
 verificaTxt=ManipulateData()
 print(verificaTxt.manipulateDataTxt())
+
+verificaCsv=ManipulateData()
+print(verificaCsv.manipulateDataCsv())
+
+
+
+print('test')
