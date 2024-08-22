@@ -3,6 +3,7 @@ from Gate2 import Gate2
 from AddToDB import AddToDB
 from MoveFile import MoveFile
 from AddToAccess import AddToAccess
+from ManipulateData import ManipulateData
 from flask import Flask,request, jsonify
 import threading
 import time
@@ -12,18 +13,25 @@ app=Flask(__name__)
 
 poarta1=Gate1()
 poarta2=Gate1()
-poarta1.saveFile()
-poarta2.saveFileCsv()
+try:
+    poarta1.saveFile()
+    poarta2.saveFileCsv()
+except FileNotFoundError:
+    pass
 
 def thread_function():
+    addFileToDb=ManipulateData()
+    moveFile=MoveFile()
     while True:
-        moveFile=MoveFile()
-        MoveFile.check_txt()
-        MoveFile.check_csv()
-        time.sleep(20)
+        addFileToDb.manipulateDataTxt()
+        moveFile.check_txt()
+        time.sleep(0.5)
+        addFileToDb.manipulateDataCsv()
+        moveFile.check_csv()
+        time.sleep(10)
 
 thread = threading.Thread(target=thread_function)
-# thread.start()      
+thread.start()      
 
 @app.route('/access',methods=['POST'])
 def addFile():

@@ -4,7 +4,7 @@ import os
 class MoveFile:
     @staticmethod
     def check_txt():
-        source_path = r'HW\PythonGates\Poarta1.txt'
+        source_path = r'HW\PythonGates\intrari\Poarta1.txt'
         destination_path = r'HW\PythonGates\backup_intrari\Poarta1.txt'
         try:
             shutil.move(source_path, destination_path)
@@ -18,7 +18,7 @@ class MoveFile:
 
     @staticmethod
     def check_csv():
-        source_path = r'HW\PythonGates\Poarta2.csv'
+        source_path = r'HW\PythonGates\intrari\Poarta2.csv'
         destination_path = r'HW\PythonGates\backup_intrari\Poarta2.csv'
         try:
             shutil.move(source_path, destination_path)
