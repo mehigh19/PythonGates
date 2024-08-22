@@ -19,9 +19,8 @@ def thread_function():
     while True:
         moveFile=MoveFile()
         MoveFile.check_txt()
-        time.sleep(4)
         MoveFile.check_csv()
-        time.sleep(15)
+        time.sleep(20)
 
 thread = threading.Thread(target=thread_function)
 # thread.start()      
