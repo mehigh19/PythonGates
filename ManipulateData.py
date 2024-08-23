@@ -1,76 +1,33 @@
-from Gate1 import *
-from AddToAccess import *
+from Gate1 import Gate1
+from AddToAccess import AddToAccess
 
-readTheFile=Gate1
+class ManipulateData:
+    def __init__(self):
+        self.gate1 = Gate1()
 
-class ManipulateData():
-
-    def manipulateDataTxt(self):
+    def manipulateDataTxt(self, txt_file):
         try:
-            dateTxt=readTheFile.readFile(self).split('\n')
-            data_list=[]
-            id_list=[]
-            sens_list=[]
-
-            for time in range(len(dateTxt)-1):
-                data=""
-                for character in range(2,26): 
-                    data+=dateTxt[time][character]
-                data_list.append(data)
-            
-            for way in range(len(dateTxt)-1):      
-                sens=''
-                sens+=dateTxt[way][27]
-                sens+=dateTxt[way][28]
-                if (dateTxt[way][29]) ==';':
-                    sens_list.append(sens)
-                else:
-                    sens+=dateTxt[way][29]
-                    sens_list.append(sens)
-            for id in range(len(dateTxt)-1): 
-                id_list.append(dateTxt[id][0])
-
-            for element in range(len(dateTxt)-1):
-                object=AddToAccess(data_list[element],sens_list[element],id_list[element],1)
-                object.addDataAccess()
-            
-            print('Data from Poarta1.txt inserted succesfully')
+            df = self.gate1.readFile()
+            for element in range(len(df)):
+                data = df.iloc[element, 1]
+                sens = df.iloc[element, 2]
+                idPersoana = int(df.iloc[element, 0])
+                obj = AddToAccess(data, sens, idPersoana, 1)
+                obj.addDataAccess()
+            print(f'Data from {txt_file} inserted successfully')
         except FileNotFoundError:
-             print("That txt file doesn't exist")
+            print(f"That file {txt_file} doesn't exist")
 
-    def manipulateDataCsv(self):
+    def manipulateDataCsv(self, csv_file):
         try:
-            dateCsv=readTheFile.readFileCsv(self).split('\n')
-            data_list=[]
-            id_list=[]
-            sens_list=[]
-
-            for time in range(len(dateCsv)-1):
-                if not time ==0:
-                    data=""
-                    for character in range(2,26): 
-                            data+=dateCsv[time][character]
-                    data_list.append(data)
-                
-            for way in range(len(dateCsv)-1):
-                if not way ==0:
-                    sens=''
-                    sens+=dateCsv[way][27]
-                    sens+=dateCsv[way][28]
-                    try:
-                            if (dateCsv[way][29]) == 't':
-                                sens+=dateCsv[way][29]
-                    except IndexError as e:
-                            pass
-                    sens_list.append(sens)
-            for id in range(len(dateCsv)-1):
-                if not id == 0: 
-                    id_list.append(dateCsv[id][0])
-
-            for element in range(len(dateCsv)-2):
-                object=AddToAccess(data_list[element],sens_list[element],id_list[element],2)
-                object.addDataAccess()
-
-            print('Data from Poarta2.csv inserted succesfully')
+            df = self.gate1.readFileCsv()
+            for element in range(len(df)):
+                if element != 0:
+                    data = df.iloc[element, 1]
+                    sens = df.iloc[element, 2]
+                    idPersoana = int(df.iloc[element, 0])
+                    obj = AddToAccess(data, sens, idPersoana, 2)
+                    obj.addDataAccess()
+            print(f'Data from {csv_file} inserted successfully')
         except FileNotFoundError:
-             print("That csv file doesn't exist")
+            print(f"That file {csv_file} doesn't exist")

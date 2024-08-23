@@ -1,11 +1,11 @@
 import shutil
 import os
 
-class MoveFile:
+class MoveFile():
     @staticmethod
-    def check_txt():
-        source_path = r'HW\PythonGates\intrari\Poarta1.txt'
-        destination_path = r'HW\PythonGates\backup_intrari\Poarta1.txt'
+    def check_txt(txt_file):
+        source_path = f'HW\\PythonGates\\intrari\\{txt_file}'
+        destination_path = f'HW\\PythonGates\\backup_intrari\\{txt_file}'
         try:
             shutil.move(source_path, destination_path)
             print(f"Successfully moved {source_path} to {destination_path}")
@@ -17,9 +17,9 @@ class MoveFile:
             print(f"An unexpected error occurred: {e}")
 
     @staticmethod
-    def check_csv():
-        source_path = r'HW\PythonGates\intrari\Poarta2.csv'
-        destination_path = r'HW\PythonGates\backup_intrari\Poarta2.csv'
+    def check_csv(csv_file):
+        source_path = f'HW\\PythonGates\\intrari\\{csv_file}'
+        destination_path = f'HW\\PythonGates\\backup_intrari\\{csv_file}'
         try:
             shutil.move(source_path, destination_path)
             print(f"Successfully moved {source_path} to {destination_path}")
@@ -29,3 +29,11 @@ class MoveFile:
             print(f"PermissionError: {e}")
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
+            
+    @staticmethod
+    def get_txt_files(directory=r'HW\PythonGates\intrari'):
+        return [f for f in os.listdir(directory) if f.endswith('.txt')]
+
+    @staticmethod
+    def get_csv_files(directory=r'HW\PythonGates\intrari'):
+        return [f for f in os.listdir(directory) if f.endswith('.csv')]

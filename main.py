@@ -11,27 +11,28 @@ import json
 
 app=Flask(__name__)
 
-poarta1=Gate1()
-poarta2=Gate1()
-try:
-    poarta1.saveFile()
-    poarta2.saveFileCsv()
-except FileNotFoundError:
-    pass
-
 def thread_function():
-    addFileToDb=ManipulateData()
-    moveFile=MoveFile()
+    addFileToDb = ManipulateData()
+    moveFile = MoveFile()
+    processed_files = set()
     while True:
-        addFileToDb.manipulateDataTxt()
-        moveFile.check_txt()
+        txt_files = moveFile.get_txt_files()
+        for txt_file in txt_files:
+            if txt_file not in processed_files:
+                addFileToDb.manipulateDataTxt(txt_file)
+                moveFile.check_txt(txt_file)
+                processed_files.add(txt_file)
         time.sleep(0.5)
-        addFileToDb.manipulateDataCsv()
-        moveFile.check_csv()
+        csv_files = moveFile.get_csv_files()
+        for csv_file in csv_files:
+            if csv_file not in processed_files:
+                addFileToDb.manipulateDataCsv(csv_file)
+                moveFile.check_csv(csv_file)
+                processed_files.add(csv_file)
         time.sleep(10)
-
+        
 thread = threading.Thread(target=thread_function)
-thread.start()      
+thread.start()
 
 @app.route('/access',methods=['POST'])
 def addFile():
@@ -45,7 +46,7 @@ def addFile():
 
     addData=AddToAccess(data,sens,idPersoana,idPoarta)
     addData.addDataAccess()
-    print('Data inserted succesfully')
+    print('Json data inserted succesfully')
     with open(r'HW\PythonGates\backup_intrari\Poarta3.json','w') as jsonFile:
         json.dump(body,jsonFile)
     return jsonify(body)

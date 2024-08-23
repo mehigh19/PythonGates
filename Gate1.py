@@ -1,26 +1,16 @@
 from Gates import Gates
+import pandas as pd
 
 class Gate1(Gates):
     def readFile(self):
         readPath = r'HW\PythonGates\intrari\Poarta1.txt'
-        with open(readPath, 'r') as readFile:
-            readContent = readFile.read()
-            return readContent
+        df = pd.read_csv(readPath, delimiter=',', header=None)
+        return df
 
     def saveFile(self):
-        savePath=r'HW\PythonGates\Poarta1.txt'
-        with open(savePath,'w') as saveFile:
-            saveFile.write(self.readFile())
-            print('Fisier txt salvat')
-
+        pass
+    
     def readFileCsv(self):
         readPath = r'HW\PythonGates\intrari\Poarta2.csv'
-        with open(readPath, 'r') as readFile:
-            readContent = readFile.read()
-            return readContent
-    
-    def saveFileCsv(self):
-        savePath=r'HW\PythonGates\Poarta2.csv'
-        with open(savePath,'w') as saveFile:
-            saveFile.write(self.readFile())
-            print('Fisier csv salvat')
+        df = pd.read_csv(readPath, delimiter=',', header=None)
+        return df
