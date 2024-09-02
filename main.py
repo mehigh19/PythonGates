@@ -4,17 +4,21 @@ from AddToDB import AddToDB
 from MoveFile import MoveFile
 from AddToAccess import AddToAccess
 from ManipulateData import ManipulateData
+from DataTreasurer import DataTreasurer
 from flask import Flask,request, jsonify
 import threading
 import time
 import json
+import time
 
 app=Flask(__name__)
 
 def thread_function():
     addFileToDb = ManipulateData()
     moveFile = MoveFile()
+    dataTr=DataTreasurer()
     processed_files = set()
+    email_sent = False
     while True:
         txt_files = moveFile.get_txt_files()
         for txt_file in txt_files:
@@ -29,8 +33,13 @@ def thread_function():
                 addFileToDb.manipulateDataCsv(csv_file)
                 moveFile.check_csv(csv_file)
                 processed_files.add(csv_file)
+        time.sleep(0.5)
+        if not email_sent:
+                    target_hour = 15
+                    target_minute = 54
+                    dataTr.wait_until(target_hour, target_minute)
+                    email_sent = True     
         time.sleep(10)
-        
 thread = threading.Thread(target=thread_function)
 thread.start()
 
