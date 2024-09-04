@@ -10,6 +10,7 @@ import threading
 import time
 import json
 import time
+from datetime import datetime
 
 app=Flask(__name__)
 
@@ -18,7 +19,6 @@ def thread_function():
     moveFile = MoveFile()
     dataTr=DataTreasurer()
     processed_files = set()
-    email_sent = False
     while True:
         txt_files = moveFile.get_txt_files()
         for txt_file in txt_files:
@@ -34,14 +34,27 @@ def thread_function():
                 moveFile.check_csv(csv_file)
                 processed_files.add(csv_file)
         time.sleep(0.5)
-        if not email_sent:
-                    target_hour = 15
-                    target_minute = 54
-                    dataTr.wait_until(target_hour, target_minute)
-                    email_sent = True     
+        hour_now = datetime.now().strftime('%H')
+        minute_now = datetime.now().strftime('%M')
+        target_hour='04'
+        target_minute='51'
         time.sleep(10)
-thread = threading.Thread(target=thread_function)
-thread.start()
+        if hour_now == target_hour and minute_now == target_minute:
+            print(dataTr.createFile())
+            time.sleep(2)
+            print(dataTr.send_email('mihaitg1919@gmail.com'))
+            time.sleep(60)
+
+# thread = threading.Thread(target=thread_function)
+# thread.start()
+
+@app.route('/test',methods=['POST'])
+def chiulangii():
+    dataTr=DataTreasurer()
+    print(dataTr.createFile())
+    time.sleep(2)
+    print(dataTr.send_email('mihaitg1919@gmail.com'))
+    return 'done'
 
 @app.route('/access',methods=['POST'])
 def addFile():
@@ -61,7 +74,7 @@ def addFile():
     return jsonify(body)
 
 
-@app.route('/test',methods=['POST'])
+@app.route('/adduser',methods=['POST'])
 def postToDB():
     body = request.get_json()
     if body is None:

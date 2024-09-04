@@ -152,7 +152,7 @@ class DataTreasurer():
             for element in data:
                 row = [element["nume"], element["oreLucrate"]]
                 writer.writerow(row)
-        return 'Txt and Csv Files created succesfully into backup_intrari'
+        return 'chiulangii.txt and chiulangii.csv files created succesfully into backup_intrari'
 
     def send_email(self,receiver_email):
         warning=''
