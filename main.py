@@ -36,8 +36,8 @@ def thread_function():
         time.sleep(0.5)
         hour_now = datetime.now().strftime('%H')
         minute_now = datetime.now().strftime('%M')
-        target_hour='04'
-        target_minute='51'
+        target_hour='20'
+        target_minute='16'
         time.sleep(10)
         if hour_now == target_hour and minute_now == target_minute:
             print(dataTr.createFile())
@@ -45,8 +45,6 @@ def thread_function():
             print(dataTr.send_email('mihaitg1919@gmail.com'))
             time.sleep(60)
 
-# thread = threading.Thread(target=thread_function)
-# thread.start()
 
 @app.route('/test',methods=['POST'])
 def chiulangii():
@@ -73,7 +71,6 @@ def addFile():
         json.dump(body,jsonFile)
     return jsonify(body)
 
-
 @app.route('/adduser',methods=['POST'])
 def postToDB():
     body = request.get_json()
@@ -89,4 +86,6 @@ def postToDB():
     return jsonify(body)
 
 if __name__ == '__main__':
+    thread = threading.Thread(target=thread_function)
+    thread.start()
     app.run(host="0.0.0.0", port=4000,debug=True)
