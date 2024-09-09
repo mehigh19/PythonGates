@@ -11,9 +11,13 @@ import time
 import json
 import time
 from datetime import datetime
+import os
 
 def thread_function():
     addFileToDb = ManipulateData()
+    checkFolder=ManipulateData()
+    checkFolder.checkFolders()
+    time.sleep(1)
     moveFile = MoveFile()
     dataTr=DataTreasurer()
     processed_files = set()
@@ -34,8 +38,8 @@ def thread_function():
         time.sleep(0.5)
         hour_now = datetime.now().strftime('%H')
         minute_now = datetime.now().strftime('%M')
-        target_hour='19'
-        target_minute='40'
+        target_hour='15'
+        target_minute='28'
         time.sleep(10)
         if hour_now == target_hour and minute_now == target_minute:
             print(dataTr.createFile())
@@ -56,7 +60,12 @@ def addFile():
         addData=AddToAccess(data,sens,idPersoana,idPoarta)
         addData.addDataAccess()
         print('Json data inserted succesfully')
-        with open(r'HW\PythonGates\backup_intrari\Poarta3.json','w') as jsonFile:
+        json_path=r'HW\PythonGates\backup_intrari\Poarta3.json'
+        if os.path.isfile(json_path):
+            mode='a'
+        else:
+            mode='w'
+        with open(r'HW\PythonGates\backup_intrari\Poarta3.json',mode) as jsonFile:
             json.dump(body,jsonFile)
         return jsonify(body)
 
