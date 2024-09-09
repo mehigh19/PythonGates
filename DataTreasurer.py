@@ -152,7 +152,7 @@ class DataTreasurer():
             for element in data:
                 row = [element["nume"], element["oreLucrate"]]
                 writer.writerow(row)
-        return 'chiulangii.txt and chiulangii.csv files created succesfully into backup_intrari'
+        return "The files chiulangii.txt and chiulangii.csv were created succesfully into backup_intrari"
 
     def send_email(self,receiver_email):
         warning=''
@@ -168,7 +168,7 @@ class DataTreasurer():
         with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
             server.login(sender_email, password)
             server.sendmail(sender_email, receiver_email, warning)
-        return 'Email sent !'
+        return f'Email sent to {receiver_email} !'
 
     def wait_until(self, target_hour, target_minute):
         now = datetime.now()

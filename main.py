@@ -12,8 +12,6 @@ import json
 import time
 from datetime import datetime
 
-app=Flask(__name__)
-
 def thread_function():
     addFileToDb = ManipulateData()
     moveFile = MoveFile()
@@ -36,56 +34,52 @@ def thread_function():
         time.sleep(0.5)
         hour_now = datetime.now().strftime('%H')
         minute_now = datetime.now().strftime('%M')
-        target_hour='20'
-        target_minute='16'
+        target_hour='19'
+        target_minute='40'
         time.sleep(10)
         if hour_now == target_hour and minute_now == target_minute:
             print(dataTr.createFile())
-            time.sleep(2)
             print(dataTr.send_email('mihaitg1919@gmail.com'))
             time.sleep(60)
 
-
-@app.route('/test',methods=['POST'])
-def chiulangii():
-    dataTr=DataTreasurer()
-    print(dataTr.createFile())
-    time.sleep(2)
-    print(dataTr.send_email('mihaitg1919@gmail.com'))
-    return 'done'
+app=Flask(__name__)
 
 @app.route('/access',methods=['POST'])
 def addFile():
-    body = request.get_json()
-    if body is None:
-        return jsonify({"error": "Invalid JSON data"}), 400
-    data = body.get('data')
-    sens = body.get('sens')
-    idPersoana = body.get('idPersoana')
-    idPoarta = body.get('idPoarta')
-
-    addData=AddToAccess(data,sens,idPersoana,idPoarta)
-    addData.addDataAccess()
-    print('Json data inserted succesfully')
-    with open(r'HW\PythonGates\backup_intrari\Poarta3.json','w') as jsonFile:
-        json.dump(body,jsonFile)
-    return jsonify(body)
+        body = request.get_json()
+        if body is None:
+            return jsonify({"error": "Invalid JSON data"}), 400
+        data = body.get('data')
+        sens = body.get('sens')
+        idPersoana = body.get('idPersoana')
+        idPoarta = body.get('idPoarta')
+        addData=AddToAccess(data,sens,idPersoana,idPoarta)
+        addData.addDataAccess()
+        print('Json data inserted succesfully')
+        with open(r'HW\PythonGates\backup_intrari\Poarta3.json','w') as jsonFile:
+            json.dump(body,jsonFile)
+        return jsonify(body)
 
 @app.route('/adduser',methods=['POST'])
 def postToDB():
-    body = request.get_json()
-    if body is None:
-        return jsonify({"error": "Invalid JSON data"}), 400
-    nume = body.get('nume')
-    prenume = body.get('prenume')
-    companie = body.get('companie')
-    idmanager = body.get('idmanager')
-        
-    ceoUser=AddToDB(nume,prenume,companie,idmanager)
-    ceoUser.registerUser()
-    return jsonify(body)
+        body = request.get_json()
+        if body is None:
+            return jsonify({"error": "Invalid JSON data"}), 400
+        nume = body.get('nume')
+        prenume = body.get('prenume')
+        companie = body.get('companie')
+        idmanager = body.get('idmanager')
+        ceoUser=AddToDB(nume,prenume,companie,idmanager)
+        ceoUser.registerUser()
+        return jsonify(body)
+
+def run_flask_server():
+    app.run(host="0.0.0.0", port=4000, debug=True, threaded=True, use_reloader=False)
 
 if __name__ == '__main__':
     thread = threading.Thread(target=thread_function)
     thread.start()
-    app.run(host="0.0.0.0", port=4000,debug=True)
+    thread2 = threading.Thread(target=run_flask_server)
+    thread2.start()
+    thread.join()
+    thread2.join()
