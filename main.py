@@ -38,11 +38,10 @@ def thread_function():
         time.sleep(0.5)
         hour_now = datetime.now().strftime('%H')
         minute_now = datetime.now().strftime('%M')
-        target_hour='15'
-        target_minute='28'
+        target_hour='17'
+        target_minute='48'
         time.sleep(10)
         if hour_now == target_hour and minute_now == target_minute:
-            print(dataTr.createFile())
             print(dataTr.send_email('mihaitg1919@gmail.com'))
             time.sleep(60)
 

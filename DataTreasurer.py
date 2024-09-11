@@ -165,10 +165,14 @@ class DataTreasurer():
         smtp_server = "smtp.gmail.com"
         sender_email = "mihaitg19@gmail.com"
         context = ssl.create_default_context()
-        with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-            server.login(sender_email, password)
-            server.sendmail(sender_email, receiver_email, warning)
-        return f'Email sent to {receiver_email} !'
+        if warning == '':
+            return 'There is no data in database'
+        else:
+            with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+                server.login(sender_email, password)
+                server.sendmail(sender_email, receiver_email, warning)
+            print(self.createFile())
+            return f'Email sent to {receiver_email} !'
 
     def wait_until(self, target_hour, target_minute):
         now = datetime.now()
