@@ -1,5 +1,4 @@
 from flask import jsonify
-import json
 
 class Gate2():
     def readFile(self):
