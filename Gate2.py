@@ -1,8 +1,7 @@
-from flask import jsonify
+import pandas as pd
 
 class Gate2():
     def readFile(self):
-        readPath = r'HW\intrari\Poarta2.csv'
-        with open(readPath, 'r') as readFile:
-            readContent = readFile.read()
-            return readContent
+        readPath = r'HW\PythonGates\intrari\Poarta2.csv'
+        df = pd.read_csv(readPath, delimiter=',', header=None)
+        return df
