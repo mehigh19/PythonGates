@@ -6,8 +6,3 @@ class Gate1(Gates):
         readPath = r'HW\PythonGates\intrari\Poarta1.txt'
         df = pd.read_csv(readPath, delimiter=',', header=None)
         return df
-    
-    def readFileCsv(self):
-        readPath = r'HW\PythonGates\intrari\Poarta2.csv'
-        df = pd.read_csv(readPath, delimiter=',', header=None)
-        return df
